@@ -55,12 +55,26 @@ $opcoes_menu = $permissoes[$id_perfil];
         <div class="saldacao">
             <h2>Bem vindo, <?php echo $_SESSION["usuario"];?>! Perfil: <?php $nome_perfil;?></h2>
         </div>
-
         <div class="logout">
             <form action="logout.php" method="POST">
                 <button type="submit">Logout</button>
             </form>
         </div>
     </header>
+<nav>
+    <ul>
+        <?php foreach ($opcoes_menu as $categoria => $arquivos):?>
+            <li class="dropdown">
+                <a href="#"><?=$categoria?></a>
+                <ul class="dropdown-menu">
+                    <?php foreach ($arquivos as $arquivo):?>
+                        <li>
+                            <a href="<?=$arquivo?>"><?= ucfirst(str_replace("_","",basename($arquivo,".php")))?></a>
+                        </li>
+                </ul>
+            </li>
+    </ul>
+</vav>
+
 </body>
 </html>
