@@ -76,6 +76,6 @@ $opcoes_menu = $permissoes[$id_perfil];
             </li>
         <?php endforeach; ?>
     </ul>
-</vav>
+</nav>
 </body>
 </html>

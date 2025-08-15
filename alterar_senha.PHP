@@ -14,7 +14,7 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
     $confirmar_senha = $_POST['confirmar_senha'];
 
     if($nova_senha !== $confirmar_senha) {
-        echo "<script>alert('As Senhas não Conincidem!');</script>"
+        echo "<script>alert('As Senhas não Conincidem!');</script>";
     }elseif(strlen($nova_senha) < 8){
         echo "<script>alert('A senha deve ter pelo menos 8 caracteres!');</script>";
     }elseif($nova_senha == "temp123"){
