@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 <body>
     <h2>Recuperar Senha:</h2>
     <form action = "recuperar_senha.php" method="POST">
-        <label for="email">Digite o seu E-mail Cadastrdo:</label>
+        <label for="email">Digite o seu E-mail Cadastrado:</label>
         <input type="email" id="email" name="email" required>
 
         <button type="submit">Enviar a Senha Temporária</button>
