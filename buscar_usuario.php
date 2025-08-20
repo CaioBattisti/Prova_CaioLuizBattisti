@@ -2,10 +2,44 @@
 session_start();
 require_once 'conexao.php';
 
-if ($_SESSION['perfil'] != 1 && $_SESSION['perfil'] != 2) {
-    echo "<script>alert('Acesso Negado!');window.location.href='principal.php';</script>";
+// Verifica se usuário está logado
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
     exit();
 }
+
+// Obtendo o Nome do Perfil do Usuario Logado
+$id_perfil = $_SESSION['perfil'];
+$sqlPerfil = "SELECT nome_perfil FROM perfil WHERE id_perfil = :id_perfil";
+$stmtPerfil = $pdo->prepare($sqlPerfil);
+$stmtPerfil->bindParam(':id_perfil', $id_perfil);
+$stmtPerfil->execute();
+$perfil = $stmtPerfil->fetch(PDO::FETCH_ASSOC);
+$nome_perfil = $perfil['nome_perfil'];
+
+// Definição das Permissões por Perfil
+$permissoes = [
+    1=>["Cadastrar"=>["cadastro_usuario.php", "cadastro_perfil.php", "cadastro_cliente.php", "cadastro_fornecedor.php", "cadastro_produto.php", "cadastro_funcionario.php"],
+        "Buscar"=>["buscar_usuario.php", "buscar_perfil.php", "buscar_cliente.php", "buscar_fornecedor.php", "buscar_produto.php", "buscar_funcionario.php"],
+        "Alterar"=>["alterar_usuario.php", "alterar_perfil.php", "alterar_cliente.php", "alterar_fornecedor.php", "alterar_produto.php", "alterar_funcionario.php"],
+        "Excluir"=>["excluir_usuario.php", "excluir_perfil.php", "excluir_cliente.php", "excluir_fornecedor.php", "excluir_produto.php", "excluir_funcionario.php"]],
+
+    2=>["Cadastrar"=>["cadastro_cliente.php"],
+        "Buscar"=>["buscar_cliente.php", "buscar_fornecedor.php", "buscar_produto.php"],
+        "Alterar"=>["alterar_cliente.php", "alterar_fornecedor.php"]],
+
+    3=>["Cadastrar"=>["cadastro_fornecedor.php", "cadastro_produto.php"],
+        "Buscar"=>["buscar_cliente.php", "buscar_fornecedor.php", "buscar_produto.php"],
+        "Alterar"=>["alterar_fornecedor.php", "alterar_produto.php"],
+        "Excluir"=>["excluir_produto.php"]],
+
+    4=>["Cadastrar"=>["cadastro_cliente.php"],
+        "Buscar"=>["buscar_produto.php"],
+        "Alterar"=>["alterar_cliente.php"]],
+];
+
+// Obtendo as Opções Disponiveis para o Perfil Logado
+$opcoes_menu = $permissoes[$id_perfil];
 
 // Inicializa a variavel para evitar Erros
 $usuarios = [];
@@ -14,7 +48,6 @@ $usuarios = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca'])) {
     $busca = trim($_POST['busca']);
 
-    // Verifica se a busca é um número(id) ou um Nome
     if (is_numeric($busca)) {
         $sql = "SELECT * FROM usuario WHERE id_usuario = :busca ORDER BY nome ASC";
         $stmt = $pdo->prepare($sql);
@@ -42,10 +75,38 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscar Usuario</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <div class="saudacao">
+            <h2>Bem vindo, <?= $_SESSION["usuario"]; ?>! Perfil: <?= $nome_perfil; ?></h2>
+        </div>
+        <div class="logout">
+            <form action="logout.php" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </header>
+
+    <nav>
+        <ul class="menu">
+            <?php foreach ($opcoes_menu as $categoria => $arquivos): ?>
+                <li class="dropdown">
+                    <a href="#"><?= $categoria ?></a>
+                    <ul class="dropdown-menu">
+                        <?php foreach ($arquivos as $arquivo): ?>
+                            <li>
+                                <a href="<?= $arquivo ?>"><?= ucfirst(str_replace("_"," ",basename($arquivo,".php"))) ?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
+
     <h2>Lista de Usuarios:</h2>
-    <!-- Formulário para Buscar usuarios --> 
     <form action="buscar_usuario.php" method="POST">
         <label for="busca">Digite o ID ou Primeiro Nome:</label>
         <input type="text" id="busca" name="busca">
@@ -53,7 +114,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </form>   
 
     <?php if (!empty($usuarios)): ?>
-        <table border="1">
+        <table>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
