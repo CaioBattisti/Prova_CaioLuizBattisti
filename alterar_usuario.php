@@ -40,8 +40,21 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterar Usuario</title>
     <link rel="stylesheet" href="styles.css">
+<!-- Sertifique-se de que o javascript esta sendo carregado corretamente -->
+    <script src="scripts.js"></script>
 </head>
 <body>
-    
+    <h2>Alterar Usuarios:</h2>
+    <!-- Formulário para Buscar usuarios --> 
+     <form action="Alterar_usuario.php" method="POST">
+        <label for="busca_usuario">Digite o ID ou Nome do Usuario:</label>
+        <input type="text" id="busca_usuario" name="busca_usuario" required onkeyup="buscarSugestoes()">
+
+        <div id="sugestoes">
+
+
+        </div>
+        <button type="submit">Pesquisar</button>
+     </form>
 </body>
 </html>

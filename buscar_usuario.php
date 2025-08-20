@@ -2,32 +2,36 @@
 session_start();
 require_once 'conexao.php';
 
-if ($_SESSION['perfil'] !=1 && $_SESSION['perfil'] !=2) {
+if ($_SESSION['perfil'] != 1 && $_SESSION['perfil'] != 2) {
     echo "<script>alert('Acesso Negado!');window.location.href='principal.php';</script>";
     exit();
 }
+
 // Inicializa a variavel para evitar Erros
 $usuarios = [];
 
-// Se o Formulartio for Enviado, Busca o usuario pelo id ou nome
-if ($_SERVER["REQUEST_METHOD"]=="POST" && !empty($_POST['busca'])) {
+// Se o Formulário for Enviado, Busca o usuario pelo id ou nome
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca'])) {
     $busca = trim($_POST['busca']);
 
     // Verifica se a busca é um número(id) ou um Nome
-    if (is_numeric($busca)){
+    if (is_numeric($busca)) {
         $sql = "SELECT * FROM usuario WHERE id_usuario = :busca ORDER BY nome ASC";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':busca', $busca, PDO::PARAM_INT);
-    }else{
-        $sql = "SELECT * FROM usuario WHERE nome LIKE :busca_nome ORDER BY nome ASC";
+    } else {
+        // Busca apenas pelo PRIMEIRO nome
+        $sql = "SELECT * FROM usuario 
+                WHERE SUBSTRING_INDEX(nome, ' ', 1) LIKE :busca_nome 
+                ORDER BY nome ASC";
         $stmt = $pdo->prepare($sql);
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':busca_nome', "%$busca%", PDO::PARAM_STR);
+        $stmt->bindValue(':busca_nome', "$busca%", PDO::PARAM_STR);
     }
-}else{
+} else {
     $sql = "SELECT * FROM usuario ORDER BY nome ASC";
     $stmt = $pdo->prepare($sql);
 }
+
 $stmt->execute();
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -42,13 +46,13 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <h2>Lista de Usuarios:</h2>
     <!-- Formulário para Buscar usuarios --> 
-     <form action="buscar_usuario.php" method="POST">
-        <label for="busca">Digite o ID ou Nome(Opcional):</label>
+    <form action="buscar_usuario.php" method="POST">
+        <label for="busca">Digite o ID ou Primeiro Nome:</label>
         <input type="text" id="busca" name="busca">
         <button type="submit">Pesquisar</button>
-     </form>   
+    </form>   
 
-    <?php if(!empty($usuarios)):?>
+    <?php if (!empty($usuarios)): ?>
         <table border="1">
             <tr>
                 <th>ID</th>
@@ -57,16 +61,15 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Perfil</th>
                 <th>Ações</th>
             </tr>
-        <?php foreach($usuarios as $usuario): ?>
+        <?php foreach ($usuarios as $usuario): ?>
             <tr>
-                <td><?=htmlspecialchars($usuario['id_usuario'])?></td>
-                <td><?=htmlspecialchars($usuario['nome'])?></td>
-                <td><?=htmlspecialchars($usuario['email'])?></td>
-                <td><?=htmlspecialchars($usuario['id_perfil'])?></td>
+                <td><?= htmlspecialchars($usuario['id_usuario']) ?></td>
+                <td><?= htmlspecialchars($usuario['nome']) ?></td>
+                <td><?= htmlspecialchars($usuario['email']) ?></td>
+                <td><?= htmlspecialchars($usuario['id_perfil']) ?></td>
                 <td>
-                    <a href="alterar_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario']) ?>">Alterar</a>
-                    
-                    <a href="excluir_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario']) ?>"onclick="return confirm('Tem Certeza que deseja Excluir esse Usuario?')">Excluir</a>
+                    <a href="alterar_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>">Alterar</a>
+                    <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>" onclick="return confirm('Tem Certeza que deseja Excluir esse Usuario?')">Excluir</a>
                 </td>
             </tr>
         <?php endforeach; ?>
