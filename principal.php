@@ -48,7 +48,7 @@ $opcoes_menu = $permissoes[$id_perfil];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Principal</title>
     <link rel="stylesheet" href="Estilo/styles.css">
-    <script src="scripts.js"></script>
+    <script src="Mascara/scripts.js"></script>
 </head>
 <body>
     <header>

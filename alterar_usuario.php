@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterar Usuário</title>
     <link rel="stylesheet" href="Estilo/styles.css">
-    <script src="scripts.js"></script>
+    <script src="Mascara/scripts.js"></script>
 </head>
 <body>
     <!-- MENU DROPDOWN -->
