@@ -50,11 +50,25 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         <label for="busca_usuario">Digite o ID ou Nome do Usuario:</label>
         <input type="text" id="busca_usuario" name="busca_usuario" required onkeyup="buscarSugestoes()">
 
-        <div id="sugestoes">
-
-
-        </div>
-        <button type="submit">Pesquisar</button>
+        <div id="sugestoes"></div>
+        <button type="submit">Buscar</button>
      </form>
+    
+     <?php if ($usuario): ?>
+        <form action="processa_alteracao_usuario.php" method="POST">
+            <input type="hidden" name="id_usuario" value="<?= htmlspecialchars($usuario['id_usuario']) ?>">
+            
+            
+
+
+
+        </form>
+
+
+
+
+
+
+
 </body>
 </html>
