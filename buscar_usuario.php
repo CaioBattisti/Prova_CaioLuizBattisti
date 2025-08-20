@@ -78,17 +78,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="saudacao">
-            <h2>Bem vindo, <?= $_SESSION["usuario"]; ?>! Perfil: <?= $nome_perfil; ?></h2>
-        </div>
-        <div class="logout">
-            <form action="logout.php" method="POST">
-                <button type="submit">Logout</button>
-            </form>
-        </div>
-    </header>
-
     <nav>
         <ul class="menu">
             <?php foreach ($opcoes_menu as $categoria => $arquivos): ?>
