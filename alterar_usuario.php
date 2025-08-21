@@ -105,7 +105,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </ul>
     </nav>
 
-    <h2>Alterar Usuários:</h2>
+    <div style="position: relative; text-align: center; margin: 20px 0;">
+        <h2 style="margin: 0;">Alterar Usuarios:</h2>
+        <div class="logout" style="position: absolute; right: 0; top: 100%; transform: translateY(-50%);">
+            <form action="logout.php" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Formulário para Buscar usuários --> 
     <form action="alterar_usuario.php" method="POST">
