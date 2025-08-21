@@ -12,7 +12,7 @@ $usuario = null;
 
 // busca todos os usuarios cadastrados em ordem alfabética
 $sql = "SELECT * FROM usuario ORDER BY nome ASC";
-$stmt = $PDO->prepare($sql);
+$stmt = $pdo->prepare($sql);
 $stmt->execute();
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -22,7 +22,7 @@ if(isset($_GET['id']) && is_numeric($_GET['id'])) {
     
     // Exclui o usuario do banco de dados
     $sql = "DELETE FROM usuario WHERE id_usuario = :id";
-    $stmt = $PDO->prepare($sql);
+    $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id_usuario, PDO::PARAM_INT);
 
     if($stmt->execute()) {
