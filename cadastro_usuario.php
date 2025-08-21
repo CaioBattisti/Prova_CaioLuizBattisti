@@ -2,25 +2,61 @@
 session_start();
 require_once 'conexao.php';
 
-// Verifica se o usuario tem permissão
-// supondo que o perfil 1 seja adm
+// Verifica se usuário está logado
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Obtendo o Nome do Perfil do Usuario Logado
+$id_perfil = $_SESSION['perfil'];
+$sqlPerfil = "SELECT nome_perfil FROM perfil WHERE id_perfil = :id_perfil";
+$stmtPerfil = $pdo->prepare($sqlPerfil);
+$stmtPerfil->bindParam(':id_perfil', $id_perfil);
+$stmtPerfil->execute();
+$perfil = $stmtPerfil->fetch(PDO::FETCH_ASSOC);
+$nome_perfil = $perfil['nome_perfil'];
+
+// Definição das Permissões por Perfil
+$permissoes = [
+    1=>["Cadastrar"=>["cadastro_usuario.php", "cadastro_perfil.php", "cadastro_cliente.php", "cadastro_fornecedor.php", "cadastro_produto.php", "cadastro_funcionario.php"],
+        "Buscar"=>["buscar_usuario.php", "buscar_perfil.php", "buscar_cliente.php", "buscar_fornecedor.php", "buscar_produto.php", "buscar_funcionario.php"],
+        "Alterar"=>["alterar_usuario.php", "alterar_perfil.php", "alterar_cliente.php", "alterar_fornecedor.php", "alterar_produto.php", "alterar_funcionario.php"],
+        "Excluir"=>["excluir_usuario.php", "excluir_perfil.php", "excluir_cliente.php", "excluir_fornecedor.php", "excluir_produto.php", "excluir_funcionario.php"]],
+    2=>["Cadastrar"=>["cadastro_cliente.php"],
+        "Buscar"=>["buscar_cliente.php", "buscar_fornecedor.php", "buscar_produto.php"],
+        "Alterar"=>["alterar_cliente.php", "alterar_fornecedor.php"]],
+    3=>["Cadastrar"=>["cadastro_fornecedor.php", "cadastro_produto.php"],
+        "Buscar"=>["buscar_cliente.php", "buscar_fornecedor.php", "buscar_produto.php"],
+        "Alterar"=>["alterar_fornecedor.php", "alterar_produto.php"],
+        "Excluir"=>["excluir_produto.php"]],
+    4=>["Cadastrar"=>["cadastro_cliente.php"],
+        "Buscar"=>["buscar_produto.php"],
+        "Alterar"=>["alterar_cliente.php"]],
+];
+
+// Obtendo as Opções Disponiveis para o Perfil Logado
+$opcoes_menu = $permissoes[$id_perfil];
+
+// Verifica se o usuario tem permissão de ADM
 if ($_SESSION['perfil'] != 1) {
     echo "Acesso Negado";
     exit();
 }
 
+// Processa o formulário
 if($_SERVER['REQUEST_METHOD'] =="POST"){
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-    $id_perfil = $_POST['id_perfil'];
+    $id_perfil_form = $_POST['id_perfil'];
 
     $sql = "INSERT INTO usuario (nome, email, senha, id_perfil) VALUES (:nome, :email, :senha, :id_perfil)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':nome', $nome);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':senha', $senha);
-    $stmt->bindParam(':id_perfil', $id_perfil);
+    $stmt->bindParam(':id_perfil', $id_perfil_form);
     
     if($stmt->execute()){
         echo "<script>alert('Usuário cadastrado com sucesso!');</script>";
@@ -35,9 +71,28 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Usuario</title>
+    <link rel="stylesheet" href="Estilo/style.css">
     <link rel="stylesheet" href="Estilo/styles.css">
 </head>
 <body>
+    <!-- Menu Dropdown -->
+    <nav>
+        <ul class="menu">
+            <?php foreach ($opcoes_menu as $categoria => $arquivos): ?>
+                <li class="dropdown">
+                    <a href="#"><?= $categoria ?></a>
+                    <ul class="dropdown-menu">
+                        <?php foreach ($arquivos as $arquivo): ?>
+                            <li>
+                                <a href="<?= $arquivo ?>"><?= ucfirst(str_replace("_"," ",basename($arquivo,".php"))) ?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
+
     <h2>Cadastrar Usuario:</h2>
     <form action="cadastro_usuario.php" method="POST">
         <label for="nome">Nome:</label>
