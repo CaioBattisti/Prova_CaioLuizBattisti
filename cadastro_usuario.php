@@ -93,7 +93,16 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
         </ul>
     </nav>
 
-    <h2>Cadastrar Usuario:</h2>
+    <!-- Título à esquerda e Logout à direita -->
+    <div style="position: relative; text-align: center; margin: 20px 0;">
+        <h2 style="margin: 0;">Cadastrar Usuario:</h2>
+        <div class="logout" style="position: absolute; right: 0; top: 100%; transform: translateY(-50%);">
+            <form action="logout.php" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+
     <form action="cadastro_usuario.php" method="POST">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required>
@@ -119,6 +128,6 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
     <a href="principal.php">Voltar</a>
 
     <!-- JavaScript externo -->
-<script src="Mascara/script.js"></script>
+    <script src="Mascara/script.js"></script>
 </body>
 </html>
