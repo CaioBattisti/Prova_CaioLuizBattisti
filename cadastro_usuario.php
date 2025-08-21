@@ -61,7 +61,7 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
     if($stmt->execute()){
         echo "<script>alert('Usuário cadastrado com sucesso!');</script>";
     }else{
-        echo "<script>alert('Erro ao Cadastrar Usuario!');</script>";
+        echo "<script>alert('Erro ao Cadastrar Usuário!');</script>";
     }
 }   
 ?>
