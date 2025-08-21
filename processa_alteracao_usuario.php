@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bindParam(':id_perfil', $id_perfil);
     $stmt->bindParam(':id', $id_usuario);
 
-    if($stmt->execute()){
+    if($stmt->execute()) {
         echo "<script>alert('Usuário atualizado com sucesso!');window.location.href='buscar_usuario.php';</script>";
     } else {
         echo "<script>alert('Erro ao atualizar usuário.');window.location.href='alterar_usuario.php?id=$usuario';</script>";
