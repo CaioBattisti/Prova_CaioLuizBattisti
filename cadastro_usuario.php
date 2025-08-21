@@ -93,7 +93,6 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
         </ul>
     </nav>
 
-    <!-- Título à esquerda e Logout à direita -->
     <div style="position: relative; text-align: center; margin: 20px 0;">
         <h2 style="margin: 0;">Cadastrar Usuario:</h2>
         <div class="logout" style="position: absolute; right: 0; top: 100%; transform: translateY(-50%);">
