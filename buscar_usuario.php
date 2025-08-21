@@ -141,7 +141,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="buscar_usuario.php">Voltar</a>
     <?php else: ?>
         <!-- Se não buscou nada, volta para a tela principal -->
-        <a href="principal.php">Voltar</a>
+        <a href="principal.php">Voltar para o Menu</a>
     <?php endif; ?>
 </body>
 </html>
