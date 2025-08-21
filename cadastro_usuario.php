@@ -124,7 +124,7 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
         <button type="reset">Cancelar</button>
     </form>
 
-    <a href="principal.php">Voltar</a>
+    <a href="principal.php">Voltar Para o Menu</a>
 
     <!-- JavaScript externo -->
     <script src="Mascara/script.js"></script>

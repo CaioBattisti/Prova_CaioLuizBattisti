@@ -23,11 +23,11 @@ $permissoes = [
         "Buscar"=>["buscar_usuario.php", "buscar_perfil.php", "buscar_cliente.php", "buscar_fornecedor.php", "buscar_produto.php", "buscar_funcionario.php"],
         "Alterar"=>["alterar_usuario.php", "alterar_perfil.php", "alterar_cliente.php", "alterar_fornecedor.php", "alterar_produto.php", "alterar_funcionario.php"],
         "Excluir"=>["excluir_usuario.php", "excluir_perfil.php", "excluir_cliente.php", "excluir_fornecedor.php", "excluir_produto.php", "excluir_funcionario.php"]],
-
+    
     2=>["Cadastrar"=>["cadastro_cliente.php"],
         "Buscar"=>["buscar_cliente.php", "buscar_fornecedor.php", "buscar_produto.php"],
         "Alterar"=>["alterar_cliente.php", "alterar_fornecedor.php"]],
-
+    
     3=>["Cadastrar"=>["cadastro_fornecedor.php", "cadastro_produto.php"],
         "Buscar"=>["buscar_cliente.php", "buscar_fornecedor.php", "buscar_produto.php"],
         "Alterar"=>["alterar_fornecedor.php", "alterar_produto.php"],
@@ -103,6 +103,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </form>
         </div>
     </div>
+
     <form action="buscar_usuario.php" method="POST">
         <label for="busca">Digite o ID ou Primeiro Nome:</label>
         <input type="text" id="busca" name="busca">
@@ -135,6 +136,12 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p>Nenhum Usuario Encontrado.</p>
     <?php endif; ?>
 
-    <a href="principal.php">Voltar</a>
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca'])): ?>
+        <!-- Se buscou alguém, botão volta para mostrar a tabela completa -->
+        <a href="buscar_usuario.php">Voltar</a>
+    <?php else: ?>
+        <!-- Se não buscou nada, volta para a tela principal -->
+        <a href="principal.php">Voltar</a>
+    <?php endif; ?>
 </body>
 </html>
