@@ -12,9 +12,12 @@ document.addEventListener("DOMContentLoaded", function() {
             errors.push("O nome não pode conter números!");
         }
 
-        // Validação do email (@gmail.com ou @hotmail.com)
-        if (!/^[\w.-]+@(\.com)$/.test(emailInput.value)) {
-            errors.push("O email deve ser um email valido!");
+        // Validação do email (aceita apenas e-mails válidos)
+        // Regex simples e eficaz
+        const emailRegex = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailRegex.test(emailInput.value)) {
+            errors.push("Digite um email válido!");
         }
 
         // Se houver erros, impede o envio e mostra alert
