@@ -117,5 +117,8 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
     </form>
 
     <a href="principal.php">Voltar</a>
+
+    <!-- JavaScript externo -->
+<script src="Mascara/script.js"></script>
 </body>
 </html>
