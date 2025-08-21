@@ -44,7 +44,7 @@ $opcoes_menu = $permissoes[$id_perfil];
 // Inicializa a variável
 $usuario = null;
 
-// Se o Formulário for enviado, busca o usuario pelo id ou pelo nome
+// Se o Formulário for enviado, busca o usuario pelo id ou pelo primeiro nome
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_POST['busca_usuario'])) {
         $busca = trim($_POST['busca_usuario']);
@@ -55,9 +55,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':busca', $busca, PDO::PARAM_INT);
         } else {
-            $sql = "SELECT * FROM usuario WHERE nome LIKE :busca_nome";
+            // Pega apenas o primeiro nome digitado
+            $primeiro_nome = explode(" ", $busca)[0];
+
+            // Busca apenas pelo primeiro nome (comparando com a primeira palavra do campo nome)
+            $sql = "SELECT * FROM usuario 
+                    WHERE SUBSTRING_INDEX(nome, ' ', 1) LIKE :primeiro_nome";
             $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(':busca_nome', "%$busca%", PDO::PARAM_STR);
+            $stmt->bindValue(':primeiro_nome', "%$primeiro_nome%", PDO::PARAM_STR);
         }
 
         $stmt->execute();
@@ -77,7 +82,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterar Usuário</title>
     <link rel="stylesheet" href="Estilo/styles.css">
+    <link rel="stylesheet" href="Estilo/style.css">
     <script src="Mascara/scripts.js"></script>
+    <script src="Mascara/script.js"></script>
 </head>
 <body>
     <!-- MENU DROPDOWN -->
@@ -102,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Formulário para Buscar usuários --> 
     <form action="alterar_usuario.php" method="POST">
-        <label for="busca_usuario">Digite o ID ou Nome do Usuário:</label>
+        <label for="busca_usuario">Digite o ID ou Nome:</label>
         <input type="text" id="busca_usuario" name="busca_usuario" required onkeyup="buscarSugestoes()">
         <div id="sugestoes"></div>
         <button type="submit">Buscar</button>

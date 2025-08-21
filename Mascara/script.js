@@ -9,12 +9,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Validação do nome (não aceita números)
         if (/\d/.test(nomeInput.value)) {
-            errors.push("O nome não pode conter números.");
+            errors.push("O nome não pode conter números!");
         }
 
         // Validação do email (@gmail.com ou @hotmail.com)
-        if (!/^[\w.-]+@(gmail\.com|hotmail\.com)$/.test(emailInput.value)) {
-            errors.push("O email deve ser do Gmail ou Hotmail.");
+        if (!/^[\w.-]+@(\.com)$/.test(emailInput.value)) {
+            errors.push("O email deve ser um email valido!");
         }
 
         // Se houver erros, impede o envio e mostra alert
