@@ -95,7 +95,14 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </ul>
     </nav>
 
-    <h2>Lista de Usuarios:</h2>
+    <div style="position: relative; text-align: center; margin: 20px 0;">
+        <h2 style="margin: 0;">Buscar Usuarios:</h2>
+        <div class="logout" style="position: absolute; right: 0; top: 100%; transform: translateY(-50%);">
+            <form action="logout.php" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
     <form action="buscar_usuario.php" method="POST">
         <label for="busca">Digite o ID ou Primeiro Nome:</label>
         <input type="text" id="busca" name="busca">
