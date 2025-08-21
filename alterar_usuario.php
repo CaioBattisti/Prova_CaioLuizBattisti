@@ -150,6 +150,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     <?php endif; ?>
 
-    <a href="principal.php">Voltar</a>
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca_usuario'])): ?>
+        <!-- Se buscou alguém, botão volta para mostrar a tabela completa -->
+        <a href="alterar_usuario.php">Voltar</a>
+    <?php else: ?>
+        <!-- Se não buscou nada, volta para a tela principal -->
+        <a href="principal.php">Voltar para o Menu</a>
+    <?php endif; ?>
 </body>
 </html>
