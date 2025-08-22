@@ -130,6 +130,6 @@ if(isset($_GET['id']) && is_numeric($_GET['id'])) {
     <?php else: ?>
         <p>Nenhum usuário encontrado.</p>
     <?php endif; ?>
-    <a href="principal.php">Voltar</a>
+    <a href="principal.php">Voltar para o Menu</a>
 </body>
 </html>
