@@ -46,24 +46,52 @@ if ($_SESSION['perfil'] != 1) {
 
 // Processa o formulário
 if($_SERVER['REQUEST_METHOD'] =="POST"){
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+    $nome = trim($_POST['nome']);
+    $email = trim($_POST['email']);
+    $senha = $_POST['senha'];
     $id_perfil_form = $_POST['id_perfil'];
 
+    $errors = [];
+
+    // Validação do nome
+    if (preg_match('/\d/', $nome)) {
+        $errors[] = "O nome não pode conter números!";
+    }
+
+    // Validação do email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Digite um email válido!";
+    }
+
+    // Verifica se o email já existe no banco
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuario WHERE email = :email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    if ($stmt->fetchColumn() > 0) {
+        $errors[] = "Este email já está cadastrado!";
+    }
+
+    // Se houver erros, mostra alerta
+    if (count($errors) > 0) {
+        echo "<script>alert('" . implode("\\n", $errors) . "');history.back();</script>";
+        exit;
+    }
+
+    // Cadastro do usuário
+    $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
     $sql = "INSERT INTO usuario (nome, email, senha, id_perfil) VALUES (:nome, :email, :senha, :id_perfil)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':nome', $nome);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':senha', $senha);
+    $stmt->bindParam(':senha', $senhaHash);
     $stmt->bindParam(':id_perfil', $id_perfil_form);
-    
+
     if($stmt->execute()){
-        echo "<script>alert('Usuário cadastrado com sucesso!');</script>";
+        echo "<script>alert('Usuário cadastrado com sucesso!');window.location.href='cadastro_usuario.php';</script>";
     }else{
-        echo "<script>alert('Erro ao Cadastrar Usuário!');</script>";
+        echo "<script>alert('Erro ao cadastrar usuário!');history.back();</script>";
     }
-}   
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -102,7 +130,7 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
         </div>
     </div>
 
-    <form action="cadastro_usuario.php" method="POST">
+    <form action="cadastro_usuario.php" method="POST" id="formCadastro">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required>
 
@@ -116,7 +144,7 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
         <select id="id_perfil" name="id_perfil">
             <option value="1">Administrador</option>
             <option value="2">Secretaria</option>
-            <option value="3">Almoxaria</option>
+            <option value="3">Almoxarife</option>
             <option value="4">Cliente</option>
         </select>
 
