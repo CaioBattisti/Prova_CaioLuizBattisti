@@ -73,7 +73,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Usuario</title>
+    <title>Buscar Usuários</title>
     <link rel="stylesheet" href="Estilo/style.css">
     <link rel="stylesheet" href="Estilo/styles.css">
 </head>
@@ -96,7 +96,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </nav>
 
     <div style="position: relative; text-align: center; margin: 20px 0;">
-        <h2 style="margin: 0;">Buscar Usuarios:</h2>
+        <h2 style="margin: 0;">Buscar Usuários:</h2>
         <div class="logout" style="position: absolute; right: 0; top: 100%; transform: translateY(-50%);">
             <form action="logout.php" method="POST">
                 <button type="submit">Logout</button>
@@ -105,7 +105,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <form action="buscar_usuario.php" method="POST">
-        <label for="busca">Digite o ID ou Primeiro Nome:</label>
+        <label for="busca">Digite o ID ou o Primeiro Nome:</label>
         <input type="text" id="busca" name="busca">
         <button type="submit">Pesquisar</button>
     </form>   
@@ -126,14 +126,14 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= htmlspecialchars($usuario['email']) ?></td>
                 <td><?= htmlspecialchars($usuario['id_perfil']) ?></td>
                 <td>
-                    <a href="alterar_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>">Alterar</a>
-                    <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>" onclick="return confirm('Tem Certeza que deseja Excluir esse Usuario?')">Excluir</a>
+                    <a href="alterar_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>">Alterar Usuário</a>
+                    <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>" onclick="return confirm('Tem Certeza que deseja Excluir esse Usuario?')">Excluir Usuário</a>
                 </td>
             </tr>
         <?php endforeach; ?>
         </table>
     <?php else: ?>
-        <p>Nenhum Usuario Encontrado.</p>
+        <p>Nenhum Usuário Encontrado.</p>
     <?php endif; ?>
 
     <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca'])): ?>
