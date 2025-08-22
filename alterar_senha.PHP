@@ -66,8 +66,8 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
 
 <script>
     function mostrarSenha() {
-        var senha1 = document.getelementById("nova_senha");
-        var senha2 = document.getelementById("confirmar_senha");
+        var senha1 = document.getElementById("nova_senha");
+        var senha2 = document.getElementById("confirmar_senha");
         var tipo = senha1.type === "password" ? "text" : "password";
         senha1.type = tipo;
         senha2.type = tipo;
