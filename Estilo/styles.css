@@ -49,6 +49,7 @@ header {
     background-color: #c9302c;
 }
 
+/* ================== MENU ================== */
 .menu {
     list-style: none;
     padding: 0;
@@ -67,22 +68,25 @@ header {
     color: white;
     text-decoration: none;
     background-color: #333;
+    white-space: nowrap; /* não deixa quebrar linha */
 }
 
 .menu li:hover > a {
     background-color: #555;
 }
 
+/* Submenu */
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%;
+    top: 100%;   /* logo abaixo do item pai */
     left: 0;
     background-color: #444;
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 200px;
+    min-width: 200px;
+    z-index: 1000;
 }
 
 .dropdown-menu li a {
@@ -92,59 +96,41 @@ header {
     text-decoration: none;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown-menu li a:hover {
+    background-color: #666;
+}
+
+/* Faz abrir o submenu */
+.dropdown:hover > .dropdown-menu {
     display: block;
 }
 
-#sugestoes {
-    background-color: #f4f4f4;
-    border: 1px solid #ccc;
-    position: absolute;
-    width: 200px;
-}
+/* ================== FORMULÁRIOS ================== */
 
-#sugestoes ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#sugestoes li {
-    padding: 5px;
-    cursor: pointer;
-}
-
-#sugestoes li:hover {
-    background-color: #ddd;
-}
-
-/* Centraliza o formulário na tela */
+/* Centraliza o formulário */
 form {
-    width: 500px; /* Define uma largura fixa */
-    margin: 50px auto; /* Centraliza na tela */
+    width: 500px;
+    margin: 50px auto;
     padding: 20px;
-    background-color: #f9f9f9; /* Fundo suave */
-    border-radius: 10px; /* Cantos arredondados */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza os elementos dentro do formulário */
+    align-items: center;
 }
 
-
-/* Ajusta as labels */
 label {
-    display: block; /* Mantém acima do campo */
+    display: block;
     font-weight: bold;
-    margin-bottom: 5px; /* Espaço entre label e campo */
+    margin-bottom: 5px;
 }
 
-/* Ajusta os campos de entrada */
 input[type="text"],
 input[type="email"],
 input[type="password"],
 select {
-    width: 80%; /* Ocupa toda a largura do formulário */
+    width: 80%;
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -152,11 +138,10 @@ select {
     font-size: 16px;
 }
 
-/* Ajusta os botões */
 button {
     width: 80%;
     padding: 10px;
-    background-color: #007bff; /* Azul bonito */
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -166,5 +151,5 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+    background-color: #0056b3;
 }
