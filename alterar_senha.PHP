@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
             
             if($stmt->execute()){
                 session_destroy(); // Finaliza a sessão
-                echo "<script>alert('Senha Alterada com Sucesso! Faça login Novamente');window.location.href='login.php';</script>";
+                echo "<script>alert('Senha Alterada com Sucesso! Faça login Novamente');window.location.href='index.php';</script>";
             }else{
                 echo "<script>alert('Erro ao Alterar a Senha!');</script>";
             }
