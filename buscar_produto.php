@@ -105,3 +105,38 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <input type="text" id="busca" name="busca">
         <button type="submit">Pesquisar</button>
     </form>
+    <?php if (!empty($produtos)): ?>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Ações</th>
+            </tr>
+        <?php foreach ($produtos as $p): ?>
+            <tr>
+                <td><?= htmlspecialchars($p['id_produto']) ?></td>
+                <td><?= htmlspecialchars($p['nome_prod']) ?></td>
+                <td><?= htmlspecialchars($p['descricao']) ?></td>
+                <td><?= htmlspecialchars($p['qtde']) ?></td>
+                <td><?= htmlspecialchars($p['valor_unit']) ?></td>
+                <td>
+                    <a href="alterar_produto.php?id=<?= $p['id_produto'] ?>">Alterar Produto</a>
+                    <a href="excluir_produto.php?id=<?= $p['id_produto'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir Produto</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </table>
+    <?php else: ?>
+        <p>Nenhum Produto Encontrado.</p>
+    <?php endif; ?>
+
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca'])): ?>
+        <a href="buscar_produto.php">Voltar</a>
+    <?php else: ?>
+        <a href="principal.php">Voltar para o Menu</a>
+    <?php endif; ?>
+</body>
+</html>
