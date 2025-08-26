@@ -42,22 +42,38 @@ $opcoes_menu = $permissoes[$id_perfil];
 // Inicializa variavel
 $produtos = [];
 
+// Se buscou algo
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca'])) {
+    $busca = trim($_POST['busca']);
 
+    if (is_numeric($busca)) {
+        $sql = "SELECT * FROM produto WHERE id_produto = :busca ORDER BY nome_prod ASC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':busca', $busca, PDO::PARAM_INT);
+    } else {
+        $sql = "SELECT * FROM produto 
+                WHERE nome_prod LIKE :busca_nome 
+                ORDER BY nome_prod ASC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':busca_nome', "$busca%", PDO::PARAM_STR);
+    }
+} else {
+    $sql = "SELECT * FROM produto ORDER BY nome_prod ASC";
+    $stmt = $pdo->prepare($sql);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$stmt->execute();
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca de Produtos</title>
+</head>
+<body>
+    
+</body>
+</html>
