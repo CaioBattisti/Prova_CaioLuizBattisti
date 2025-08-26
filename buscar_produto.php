@@ -91,3 +91,17 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php endforeach; ?>
         </ul>
     </nav>
+    <div style="position: relative; text-align: center; margin: 20px 0;">
+        <h2 style="margin: 0;">Buscar Produtos:</h2>
+        <div class="logout" style="position: absolute; right: 0; top: 100%; transform: translateY(-50%);">
+            <form action="logout.php" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <form action="buscar_produto.php" method="POST">
+        <label for="busca">Digite o ID ou Nome:</label>
+        <input type="text" id="busca" name="busca">
+        <button type="submit">Pesquisar</button>
+    </form>
