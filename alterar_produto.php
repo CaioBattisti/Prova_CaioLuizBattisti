@@ -105,12 +105,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" id="busca_produto" name="busca_produto" required>
         <button type="submit">Buscar</button>
     </form>
+    <?php if ($produto): ?>
+        <form action="processa_alteracao_produto.php" method="POST">
+            <input type="hidden" name="id_produto" value="<?= htmlspecialchars($produto['id_produto']) ?>">
 
-    
+            <label for="nome_prod">Nome:</label>
+            <input type="text" id="nome_prod" name="nome_prod" value="<?= htmlspecialchars($produto['nome_prod']) ?>" required>
 
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao"><?= htmlspecialchars($produto['descricao']) ?></textarea>
 
+            <label for="qtde">Quantidade:</label>
+            <input type="number" id="qtde" name="qtde" value="<?= htmlspecialchars($produto['qtde']) ?>" required>
 
+            <label for="valor_unit">Valor Unitário:</label>
+            <input type="number" step="0.01" id="valor_unit" name="valor_unit" value="<?= htmlspecialchars($produto['valor_unit']) ?>" required>
 
+            <button type="submit">Alterar</button>
+            <button type="reset">Cancelar</button>
+        </form>
+    <?php endif; ?>
 
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca_produto'])): ?>
+        <a href="alterar_produto.php">Voltar</a>
+    <?php else: ?>
+        <a href="principal.php">Voltar para o Menu</a>
+    <?php endif; ?>
 </body>
 </html>
