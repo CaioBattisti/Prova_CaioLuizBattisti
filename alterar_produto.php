@@ -91,8 +91,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endforeach; ?>
         </ul>
     </nav>
+    <div style="position: relative; text-align: center; margin: 20px 0;">
+        <h2 style="margin: 0;">Alterar Produtos:</h2>
+        <div class="logout" style="position: absolute; right: 0; top: 100%; transform: translateY(-50%);">
+            <form action="logout.php" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
 
+    <form action="alterar_produto.php" method="POST">
+        <label for="busca_produto">Digite o ID ou Nome do Produto:</label>
+        <input type="text" id="busca_produto" name="busca_produto" required>
+        <button type="submit">Buscar</button>
+    </form>
 
+    
 
 
 
