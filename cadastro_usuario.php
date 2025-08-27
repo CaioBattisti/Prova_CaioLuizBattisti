@@ -57,6 +57,10 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
     if (preg_match('/\d/', $nome)) {
         $errors[] = "O nome não pode conter números!";
     }
+     // Verificação: nome do produto não pode conter números ou caracteres especiais
+     if (!preg_match("/^[A-Za-zÀ-ÿ\s]+$/", $nome_prod)) {
+        $errors[] = "O nome do produto não pode conter números ou caracteres especiais!";
+    }
 
     // Validação do email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

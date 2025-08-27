@@ -49,6 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (empty($nome_prod)) {
         $errors[] = "O nome do produto é obrigatório!";
     }
+    
+    // Verificação: nome do produto não pode conter números ou caracteres especiais
+    if (!preg_match("/^[A-Za-zÀ-ÿ\s]+$/", $nome_prod)) {
+        $errors[] = "O nome do produto não pode conter números ou caracteres especiais!";
+    }
 
     if (!is_numeric($qtde) || $qtde < 0) {
         $errors[] = "Quantidade inválida!";
