@@ -135,7 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <button type="submit">Salvar</button>
         <button type="reset">Cancelar</button>
     </form>
-
     <a href="principal.php">Voltar Para o Menu</a>
 </body>
 </html>
