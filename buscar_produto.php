@@ -132,7 +132,6 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php else: ?>
         <p>Nenhum Produto Encontrado.</p>
     <?php endif; ?>
-
     <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca'])): ?>
         <a href="buscar_produto.php">Voltar</a>
     <?php else: ?>
