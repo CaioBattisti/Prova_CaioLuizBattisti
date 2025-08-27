@@ -7,7 +7,6 @@ if ($_SESSION['perfil'] != 1 && $_SESSION['perfil'] != 3) {
     echo "<script>alert('Acesso Negado!');window.location.href='principal.php';</script>";
     exit();
 }
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_produto = $_POST['id_produto'];
     $nome_prod = $_POST['nome_prod'];
