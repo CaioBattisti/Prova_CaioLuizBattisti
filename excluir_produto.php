@@ -87,7 +87,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <?php endforeach; ?>
         </ul>
     </nav>
-
     <div style="position: relative; text-align: center; margin: 20px 0;">
         <h2 style="margin: 0;">Excluir Produtos:</h2>
         <div class="logout" style="position: absolute; right: 0; top: 0%; transform: translateY(-70%);">
