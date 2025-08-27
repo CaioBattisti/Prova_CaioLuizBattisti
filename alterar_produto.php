@@ -125,7 +125,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="reset">Cancelar</button>
         </form>
     <?php endif; ?>
-
     <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['busca_produto'])): ?>
         <a href="alterar_produto.php">Voltar</a>
     <?php else: ?>
