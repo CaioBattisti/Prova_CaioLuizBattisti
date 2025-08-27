@@ -96,7 +96,32 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             </form>
         </div>
     </div>
-
-
+    <?php if (!empty($produtos)): ?>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Ações</th>
+            </tr>
+            <?php foreach ($produtos as $p): ?>
+                <tr>
+                    <td><?= htmlspecialchars($p['id_produto']) ?></td>
+                    <td><?= htmlspecialchars($p['nome_prod']) ?></td>
+                    <td><?= htmlspecialchars($p['descricao']) ?></td>
+                    <td><?= htmlspecialchars($p['qtde']) ?></td>
+                    <td><?= htmlspecialchars($p['valor_unit']) ?></td>
+                    <td>
+                        <a href="excluir_produto.php?id=<?= $p['id_produto'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php else: ?>
+        <p>Nenhum produto encontrado.</p>
+    <?php endif; ?>
+    <a href="principal.php">Voltar para o Menu</a>
 </body>
 </html>
